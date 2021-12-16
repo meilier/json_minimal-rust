@@ -210,9 +210,16 @@ impl Json {
             Json::JSON(values) => {
                 for n in 0..values.len() {
                     match &values[n] {
-                        Json::OBJECT { name, value: _ } => {
+                        Json::OBJECT { name, value } => {
                             if name == search {
-                                return Some(&values[n]);
+                                match value.unbox() {
+                                    Json::STRING(_) => {
+                                        return Some(value.unbox());
+                                    }
+                                    _ => {
+                                        return Some(&values[n]);
+                                    }
+                                }
                             }
                         }
                         _ => {}
@@ -222,6 +229,9 @@ impl Json {
                 return None;
             }
             Json::OBJECT { name: _, value } => match value.unbox() {
+                Json::STRING(_) => {
+                    return Some(value.unbox());
+                }
                 Json::JSON(values) => {
                     for n in 0..values.len() {
                         match &values[n] {
@@ -333,7 +343,7 @@ impl Json {
                 result.push(']');
             }
             Json::STRING(val) => {
-                result.push_str(&format!("\"{}\"", val));
+                result.push_str(&format!("{}", val));
             }
             Json::NUMBER(val) => {
                 result.push_str(&format!("{}", val));
