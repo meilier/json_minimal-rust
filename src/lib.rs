@@ -413,9 +413,9 @@ impl Json {
         incr: &mut usize,
         name: String,
     ) -> Result<Json, (usize, &'static str)> {
-//        if input[*incr] as char != ':' {
-//            return Err((*incr, "Error parsing object."));
-//        }
+        //        if input[*incr] as char != ':' {
+        //            return Err((*incr, "Error parsing object."));
+        //        }
 
         *incr += 1;
 
@@ -431,9 +431,9 @@ impl Json {
                     if *incr >= input.len() {
                         return Err((*incr, "Error parsing object."));
                     }
-                },
+                }
                 _ => {
-                 break;
+                    break;
                 }
             }
         }
@@ -461,9 +461,9 @@ impl Json {
     fn parse_json(input: &[u8], incr: &mut usize) -> Result<Json, (usize, &'static str)> {
         let mut result: Vec<Json> = Vec::new();
 
-//        if input[*incr] as char != '{' {
-//            return Err((*incr, "Error parsing json."));
-//        }
+        //        if input[*incr] as char != '{' {
+        //            return Err((*incr, "Error parsing json."));
+        //        }
 
         *incr += 1;
 
@@ -488,7 +488,7 @@ impl Json {
                     return Ok(Json::JSON(result));
                 }
                 '{' => Self::parse_json(input, incr)?,
-                '\r' | '\n' | '\t' | ' ' => {                    
+                '\r' | '\n' | '\t' | ' ' => {
                     *incr += 1;
 
                     if *incr >= input.len() {
@@ -496,7 +496,7 @@ impl Json {
                     }
 
                     continue;
-                },
+                }
                 _ => {
                     return Err((*incr, "Error parsing json."));
                 }
@@ -510,9 +510,9 @@ impl Json {
     fn parse_array(input: &[u8], incr: &mut usize) -> Result<Json, (usize, &'static str)> {
         let mut result: Vec<Json> = Vec::new();
 
-//        if input[*incr] as char != '[' {
-//            return Err((*incr, "Error parsing array."));
-//        }
+        //        if input[*incr] as char != '[' {
+        //            return Err((*incr, "Error parsing array."));
+        //        }
 
         *incr += 1;
 
@@ -536,7 +536,7 @@ impl Json {
                     *incr += 1;
 
                     return Ok(Json::ARRAY(result));
-                },
+                }
                 '\r' | '\n' | '\t' | ' ' => {
                     *incr += 1;
 
@@ -545,7 +545,7 @@ impl Json {
                     }
 
                     continue;
-                },
+                }
                 _ => {
                     return Err((*incr, "Error parsing array."));
                 }
@@ -559,9 +559,9 @@ impl Json {
     fn parse_string(input: &[u8], incr: &mut usize) -> Result<Json, (usize, &'static str)> {
         let mut result: Vec<u8> = Vec::new();
 
-//        if input[*incr] as char != '\"' {
-//            return Err((*incr, "Error parsing string."));
-//        }
+        //        if input[*incr] as char != '\"' {
+        //            return Err((*incr, "Error parsing string."));
+        //        }
 
         *incr += 1;
 
@@ -586,10 +586,10 @@ impl Json {
                     } else {
                         return Ok(Json::STRING(result));
                     }
-                },
+                }
                 b'\\' => {
                     Self::parse_string_escape_sequence(input, incr, &mut result)?;
-                },
+                }
                 c => {
                     result.push(c);
 
@@ -609,9 +609,9 @@ impl Json {
         incr: &mut usize,
         result: &mut Vec<u8>,
     ) -> Result<(), (usize, &'static str)> {
-//        if input[*incr] as char != '\\' {
-//            return Err((*incr, "Error parsing string escape sequence."));
-//        }
+        //        if input[*incr] as char != '\\' {
+        //            return Err((*incr, "Error parsing string escape sequence."));
+        //        }
 
         *incr += 1;
 
@@ -675,7 +675,7 @@ impl Json {
             match input[*incr] as char {
                 ',' | ']' | '}' | '\r' | '\n' | '\t' | ' ' => {
                     break;
-                },
+                }
                 c => {
                     result.push(c);
 
@@ -712,7 +712,7 @@ impl Json {
             match input[*incr] as char {
                 ',' | ']' | '}' | '\r' | '\n' | '\t' | ' ' => {
                     break;
-                },
+                }
                 c => {
                     result.push(c);
 
@@ -751,7 +751,7 @@ impl Json {
             match input[*incr] as char {
                 ',' | ']' | '}' | '\r' | '\n' | '\t' | ' ' => {
                     break;
-                },
+                }
                 c => {
                     result.push(c);
 
