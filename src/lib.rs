@@ -316,7 +316,7 @@ impl Json {
 
         match self {
             Json::OBJECT { name, value } => {
-                result.push_str(&format!("\"{}\":{}", name, value.print()));
+                result.push_str(&format!("\"{}\":\"{}\"", name, value.print()));
             }
             Json::JSON(values) => {
                 result.push('{');
